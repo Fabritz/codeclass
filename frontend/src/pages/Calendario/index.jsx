@@ -2,6 +2,7 @@ import React from "react";
 
 import { Menu, MenuItem } from "react-pro-sidebar";
 
+import { Link } from 'react-router-dom';
 import { Button, Img, Text } from "components";
 import Sidebar2 from "components/Sidebar2";
 
@@ -17,9 +18,11 @@ const CalendarioPage = () => {
           Asignaciones
         </Text>
         <div className="bg-gray-900_01 flex flex-1 flex-col items-center justify-start md:ml-[0] ml-[545px] p-[25px] md:px-5 w-full">
+        <Link to="/Inicio">
           <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] mb-[890px] min-w-[182px] mt-9 py-2.5 rounded-[15px] sm:text-[19px] md:text-[21px] text-[23px] text-blue_gray-400 text-center">
             Cerrar sesión
           </Button>
+        </Link>
         </div>
       </div>
     </>

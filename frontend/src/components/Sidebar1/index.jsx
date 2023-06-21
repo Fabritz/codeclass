@@ -3,6 +3,7 @@ import React from "react";
 import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
 
 import { Img, Text } from "components";
+import { Link } from 'react-router-dom';
 
 const Sidebar1 = (props) => {
   const { collapseSidebar, collapsed } = useProSidebar();
@@ -50,9 +51,11 @@ const Sidebar1 = (props) => {
                 />
               }
             >
+            <Link to="/AUnirseGrupo">
               <Text className="sm:text-[19px] md:text-[21px]">
                 Unirse a grupo
               </Text>
+            </Link>
             </MenuItem>
             <MenuItem
               icon={
@@ -64,7 +67,8 @@ const Sidebar1 = (props) => {
               }
               active={window.location.pathname === "/agrupos"}
             >
-              <Text className="sm:text-[19px] md:text-[21px]">Grupos</Text>
+              <Link to="/AGrupos">
+              <Text className="sm:text-[19px] md:text-[21px]">Grupos</Text></Link>
             </MenuItem>
           </div>
           <div className="flex flex-col items-center justify-start mt-[71px] w-full">
@@ -78,7 +82,9 @@ const Sidebar1 = (props) => {
               }
               active={window.location.pathname === "/calendario"}
             >
+              <Link to="/Calendario">
               <Text className="sm:text-[19px] md:text-[21px]">Calendario</Text>
+              </Link>
             </MenuItem>
           </div>
         </Menu>

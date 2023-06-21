@@ -3,6 +3,8 @@ import React from "react";
 import { Menu, MenuItem } from "react-pro-sidebar";
 
 import { Button, Img, Text } from "components";
+
+import { Link } from 'react-router-dom';
 import Sidebar1 from "components/Sidebar1";
 
 const DesktopFivePage = () => {
@@ -62,9 +64,11 @@ const DesktopFivePage = () => {
             </div>
           </div>
           <div className="bg-gray-900_01 flex flex-1 flex-col items-center justify-start md:ml-[0] ml-[104px] p-[27px] md:px-5 w-full">
+            <Link to="/Inicio">
             <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] mb-[875px] min-w-[182px] mt-[43px] py-3 rounded-[15px] sm:text-[19px] md:text-[21px] text-[23px] text-blue_gray-400 text-center">
               Cerrar sesión
             </Button>
+            </Link>
           </div>
         </div>
       </div>

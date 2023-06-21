@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Menu, MenuItem } from "react-pro-sidebar";
-
+import { Link } from 'react-router-dom';
 import { Button, Img, Input, Text } from "components";
 import Sidebar11 from "components/Sidebar11";
 
@@ -80,9 +80,11 @@ const UProfesorOnePage = () => {
             </div>
           </div>
           <div className="bg-gray-900_01 flex flex-1 flex-col items-center justify-start p-[25px] md:px-5 w-full">
+            <Link to="/Inicio">
             <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] mb-[890px] min-w-[182px] mt-9 py-2.5 rounded-[15px] sm:text-[19px] md:text-[21px] text-[23px] text-blue_gray-400 text-center">
               Cerrar sesión
             </Button>
+            </Link>
           </div>
         </div>
       </div>

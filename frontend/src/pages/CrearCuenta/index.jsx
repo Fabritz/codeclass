@@ -2,6 +2,8 @@ import React from "react";
 
 import { Button, Img, Text } from "components";
 
+import { Link } from 'react-router-dom';
+
 const CrearCuentaPage = () => {
   return (
     <>
@@ -29,9 +31,11 @@ const CrearCuentaPage = () => {
           >
             Alumno
           </Text>
+          <Link to="/CrearCuentaOne">
           <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] min-w-[291px] mt-[77px] py-[22px] rounded-sm sm:text-[21px] md:text-[23px] text-[25px] text-blue_gray-400 text-center">
             Crear cuenta
           </Button>
+          </Link>
         </div>
       </div>
     </>

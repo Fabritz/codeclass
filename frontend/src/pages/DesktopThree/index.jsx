@@ -2,6 +2,7 @@ import React from "react";
 
 import { Menu, MenuItem } from "react-pro-sidebar";
 
+import { Link } from 'react-router-dom';
 import { Button, Img, Text } from "components";
 import Sidebar2 from "components/Sidebar2";
 
@@ -59,9 +60,11 @@ const DesktopThreePage = () => {
             </div>
           </div>
           <div className="bg-gray-900_01 flex flex-1 md:flex-1 flex-col items-center justify-start max-w-[300px] p-[30px] md:px-5 w-[30px] md:w-full">
+            <Link to="/inicio">
             <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] min-w-[182px] mt-[62px] py-3 rounded-[15px] sm:text-[19px] md:text-[21px] text-[23px] text-blue_gray-400 text-center">
               Cerrar sesión
             </Button>
+            </Link>
             <div className="bg-gray-800 flex flex-row gap-1.5 items-start justify-end md:m-0 m-5 p-2 rounded-[15px] top-5 w-full">
               <Text
                 className="text-center text-gray-300 text-xl"

@@ -2,13 +2,17 @@ import React from "react";
 
 import { Button, Img, Text } from "components";
 
+import { Link } from 'react-router-dom';
+
 const InicioPage = () => {
   return (
     <>
       <div className="bg-gradient  border border-blue_gray-800 border-solid flex flex-col font-inter justify-start mx-auto p-[78px] md:px-10 sm:px-5 w-full">
-        <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] min-w-[225px] md:ml-[0] ml-[1059px] mt-7 py-[7px] rounded-[20px] sm:text-[21px] md:text-[23px] text-[25px] text-blue_gray-400 text-center">
-          Crear cuenta
-        </Button>
+      <Link to="/crearcuentaone">
+          <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] min-w-[225px] md:ml-[0] ml-[1059px] mt-7 py-[7px] rounded-[20px] sm:text-[21px] md:text-[23px] text-[25px] text-blue_gray-400 text-center">
+           Crear cuenta
+          </Button>
+        </Link>
         <Img
           className="h-[89px] md:ml-[0] ml-[629px] mt-[34px] w-[89px]"
           src="images/img_grid.svg"
@@ -30,15 +34,19 @@ const InicioPage = () => {
           >
             Contraseña
           </Text>
+          <Link to="/contrasea">
           <Text
             className="cursor-pointer mt-[17px] text-[15px] text-blue_gray-400 text-center"
             size="txtInterRegular15"
           >
             Olvidé mi contraseña
           </Text>
-          <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] min-w-[307px] mt-14 py-[22px] rounded-sm sm:text-[21px] md:text-[23px] text-[25px] text-blue_gray-400 text-center">
-            Ingresar
-          </Button>
+          </Link>
+            <Link to="/desktoptwo">
+              <Button className="bg-blue_gray-800 cursor-pointer leading-[normal] min-w-[307px] mt-14 py-[22px] rounded-sm sm:text-[21px] md:text-[23px] text-[25px] text-blue_gray-400 text-center">
+                Ingresar
+              </Button>
+            </Link>
         </div>
       </div>
     </>
