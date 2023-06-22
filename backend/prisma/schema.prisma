@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Grupos {
+  id         Int       @id(map: "PK_27106a912a4e36face11c5c50ad") @default(autoincrement())
+  createdAt  DateTime? @default(now()) @db.Timestamp(6)
+  updatedAt  DateTime? @default(now()) @db.Timestamp(6)
+  nombre     String    @db.VarChar(100)
+  estado     String    @db.VarChar(100)
+  idProfesor Int
+}
