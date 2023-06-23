@@ -6,8 +6,16 @@ import { UsersModule } from './users/users.module';
 import { UmlModule } from './uml/uml.module';
 import { GruposModule } from './grupos/grupos.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports: [AuthModule, UsersModule, UmlModule, GruposModule, PrismaModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    UsersModule,
+    UmlModule,
+    GruposModule,
+    PrismaModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

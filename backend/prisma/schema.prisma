@@ -8,10 +8,24 @@ datasource db {
 }
 
 model Grupos {
-  id         Int       @id(map: "PK_27106a912a4e36face11c5c50ad") @default(autoincrement())
-  createdAt  DateTime? @default(now()) @db.Timestamp(6)
-  updatedAt  DateTime? @default(now()) @db.Timestamp(6)
-  nombre     String    @db.VarChar(100)
-  estado     String    @db.VarChar(100)
+  id         Int        @id(map: "PK_27106a912a4e36face11c5c50ad") @default(autoincrement())
+  createdAt  DateTime?  @default(now()) @db.Timestamp(6)
+  updatedAt  DateTime?  @default(now()) @db.Timestamp(6)
+  nombre     String     @db.VarChar(100)
+  estado     String     @db.VarChar(100)
   idProfesor Int
+  creador    Usuarios   @relation("GruposCreados", fields: [idProfesor], references: [id])
+  alumnos    Usuarios[]
+}
+
+model Usuarios {
+  id        Int       @id() @default(autoincrement())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  email         String   @unique
+  password      String
+  tipo          String
+  GruposCreados Grupos[] @relation("GruposCreados")
+  gruposUnidos  Grupos[]
 }
