@@ -7,15 +7,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum tipoUsuario {
+  alumno
+  profesor
+}
+
+enum tipoTarea {
+  visible
+  oculto
+  eliminado
+}
+
+enum tipoEntrega {
+  disponible
+  enviado
+  calificado
+  tardanza
+}
+
+enum tipoGrupo {
+  visible
+  oculto
+}
+
 model Grupos {
   id         Int        @id(map: "PK_27106a912a4e36face11c5c50ad") @default(autoincrement())
   createdAt  DateTime?  @default(now()) @db.Timestamp(6)
   updatedAt  DateTime?  @default(now()) @db.Timestamp(6)
   nombre     String     @db.VarChar(100)
-  estado     String     @db.VarChar(100)
+  estado     tipoGrupo  @default(visible)
   idProfesor Int
   creador    Usuarios   @relation("GruposCreados", fields: [idProfesor], references: [id])
   alumnos    Usuarios[]
+  tareas     Tareas[]
 }
 
 model Usuarios {
@@ -23,9 +47,41 @@ model Usuarios {
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
-  email         String   @unique
+  email         String      @unique
   password      String
-  tipo          String
-  GruposCreados Grupos[] @relation("GruposCreados")
+  tipo          tipoUsuario @default(alumno)
+  GruposCreados Grupos[]    @relation("GruposCreados")
   gruposUnidos  Grupos[]
+  entregas      Entregas[]
+}
+
+model Tareas {
+  id        Int       @id() @default(autoincrement())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  estado         tipoTarea  @default(visible)
+  titulo         String
+  descripcion    String
+  idGrupo        Int
+  clase          Grupos     @relation(fields: [idGrupo], references: [id])
+  entregas       Entregas[]
+  fechaDeEntrega DateTime?
+}
+
+model Entregas {
+  id        Int       @id() @default(autoincrement())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  estado         tipoEntrega @default(disponible)
+  ArchivoCodigo  String
+  ArchivoUML     String
+  calificacion   Int
+  comentario     String
+  idTarea        Int
+  idUsuario      Int
+  tarea          Tareas      @relation(fields: [idTarea], references: [id])
+  estudiante     Usuarios    @relation(fields: [idUsuario], references: [id])
+  fechaDeEntrega DateTime?
 }
