@@ -1,24 +1,39 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { grupoDto } from './dto';
-import { tipoUsuario } from '@prisma/client';
+import { tipoGrupo, tipoUsuario } from '@prisma/client';
 
 @Injectable()
 export class GruposService {
   constructor(private prisma: PrismaService) {}
 
   async EncontrarClases(user: any) {
-    return user;
-    // this.prisma.grupos.findMany({
-    //   where: {
-    //         alumnos: {
-    //         some
-    //     },
-    //   },
-    // });
+    const alumno = await this.prisma.usuarios.findFirst({
+      select: {
+        gruposUnidos: {
+          where: {
+            estado: tipoGrupo.visible,
+          },
+        },
+      },
+      where: {
+        id: user.id,
+      },
+    });
+    return alumno.gruposUnidos;
   }
   async EncontrarClasesProfesor(user: any) {
-    return user;
+    if (user.tipo != tipoUsuario.profesor)
+      throw new ForbiddenException('Solo profesores controlan grupos');
+    const profesor = await this.prisma.usuarios.findFirst({
+      select: {
+        GruposCreados: true,
+      },
+      where: {
+        id: user.id,
+      },
+    });
+    return profesor.GruposCreados;
   }
 
   async CrearClase(user: any, dto: grupoDto) {
@@ -37,7 +52,7 @@ export class GruposService {
     const clase = await this.prisma.grupos.findUnique({
       where: { id: idReceived },
     });
-    if (clase.id === user.id)
+    if (clase.idProfesor === user.id)
       throw new ForbiddenException('No se puede unir a su propia clase');
 
     const claseUnida = await this.prisma.grupos.update({
@@ -59,10 +74,58 @@ export class GruposService {
   }
 
   async BorrarClase(user: any, id: number) {
-    return user;
+    const clase = await this.prisma.grupos.findUnique({
+      where: { id: id },
+    });
+    if (clase.idProfesor !== user.id)
+      throw new ForbiddenException('solo el profesor puede borrar la clase');
+    const grupoBorrado = await this.prisma.grupos.delete({
+      where: {
+        id: id,
+      },
+    });
+    return grupoBorrado;
   }
 
   async SalirseDeClase(user: any, id: number) {
-    return user;
+    const clase = await this.prisma.grupos.findUnique({
+      where: { id: id },
+    });
+    if (clase.idProfesor === user.id)
+      throw new ForbiddenException('No se puede salir de su propia clase');
+    const claseSalida = await this.prisma.grupos.update({
+      where: {
+        id: id,
+      },
+      data: {
+        alumnos: {
+          disconnect: {
+            id: user.id,
+          },
+        },
+      },
+      include: {
+        alumnos: true,
+      },
+    });
+    return claseSalida;
+  }
+
+  async ActualizarGrupo(user: any, dto: grupoDto) {
+    const clase = await this.prisma.grupos.findUnique({
+      where: { id: dto.id },
+    });
+    if (clase.idProfesor !== user.id)
+      throw new ForbiddenException('solo el profesor puede modificar la clase');
+    const claseModificada = await this.prisma.grupos.update({
+      where: {
+        id: dto.id,
+      },
+      data: {
+        nombre: dto.nombre,
+        estado: dto?.estado,
+      },
+    });
+    return claseModificada;
   }
 }

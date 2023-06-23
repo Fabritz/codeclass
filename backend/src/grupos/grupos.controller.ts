@@ -11,7 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { GruposService } from './grupos.service';
-import { grupoDto } from './dto';
+import { grupoDto, grupoIdDto } from './dto';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('grupos')
@@ -30,15 +30,19 @@ export class GruposController {
     return this.gruposService.CrearClase(req.user, dto);
   }
   @Put('unirse')
-  UnirseAClase(@Req() req: Request, @Body() id: number) {
-    return this.gruposService.UnirseAClase(req.user, id);
+  UnirseAClase(@Req() req: Request, @Body() dto: grupoIdDto) {
+    return this.gruposService.UnirseAClase(req.user, dto.id);
   }
   @Delete('borrar')
-  BorrarClase(@Req() req: Request, @Body() id: number) {
-    return this.gruposService.BorrarClase(req.user, id);
+  BorrarClase(@Req() req: Request, @Body() dto: grupoIdDto) {
+    return this.gruposService.BorrarClase(req.user, dto.id);
   }
   @Put('salir')
-  SalirseDeClase(@Req() req: Request, @Body() id: number) {
-    return this.gruposService.SalirseDeClase(req.user, id);
+  SalirseDeClase(@Req() req: Request, @Body() dto: grupoIdDto) {
+    return this.gruposService.SalirseDeClase(req.user, dto.id);
+  }
+  @Put('actualizar')
+  Actualizar(@Req() req: Request, @Body() dto: grupoDto) {
+    return this.gruposService.ActualizarGrupo(req.user, dto);
   }
 }
