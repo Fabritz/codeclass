@@ -1,16 +1,22 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-export enum tiposDeUsuario {
-  alumno = 'alumno',
-  profesor = 'profesor',
-}
+import { tipoEntrega } from '@prisma/client';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class AuthDto {
-  @IsEmail()
-  @IsNotEmpty()
-  email: string;
+export class EntregaDto {
+  id: number;
   @IsString()
+  ArchivoCodigo: string;
+  @IsString()
+  archivoUML: string;
+  @IsString()
+  comentario: string;
+  @IsNumber()
   @IsNotEmpty()
-  password: string;
-  @IsEnum(tiposDeUsuario)
-  tipo: tiposDeUsuario;
+  idTarea: number;
+  @IsNumber()
+  calificacion: number;
+  @IsNumber()
+  @IsNotEmpty()
+  idUsuario: number;
+  @IsEnum(tipoEntrega)
+  estado: tipoEntrega = 'enviado';
 }

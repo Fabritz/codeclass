@@ -18,7 +18,7 @@ import { grupoDto, grupoIdDto } from './dto';
 @Controller('grupos')
 export class GruposController {
   constructor(private gruposService: GruposService) {}
-  @Get(':id')
+  @Get('overview/:id')
   Overview(@Req() req: Request, @Param('id') id: number) {
     return this.gruposService.OverviewClase(req.user, id);
   }

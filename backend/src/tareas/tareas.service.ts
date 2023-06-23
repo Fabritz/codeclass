@@ -46,12 +46,6 @@ export class TareasService {
     });
     return profesor.GruposCreados;
   }
-
-  titulo: string;
-  descripcion?: Text;
-  idClase: number;
-  fechaDeEntrega: Date;
-  estado: tipoTarea;
   async CrearTarea(user: any, dto: TareaDto) {
     const clase = await this.prisma.grupos.findUnique({
       where: { id: dto.idClase },

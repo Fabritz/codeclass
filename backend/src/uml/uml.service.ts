@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { promisify } from 'util';
-import { exec } from 'child_process';
-import * as fs from 'fs';
-
-const execPromise = promisify(exec);
-
+import axios from 'axios';
+import { UmlDto } from './dto';
 @Injectable()
 export class UmlService {
-  async generateUmlDiagram(pythonCode: string): Promise<string> {
-    const filePath = 'code.py';
+  async generateDiagram(dto: UmlDto): Promise<Buffer> {
+    const url = `https://kroki.io/${dto.diagram_type}/svg`;
 
-    await fs.promises.writeFile(filePath, pythonCode);
-    const { stdout } = await execPromise(`pyreverse ${filePath}`);
-    return stdout;
+    const response = await axios.post(url, dto.diagram_source, {
+      responseType: 'arraybuffer',
+      headers: { 'Content-Type': 'text/plain' },
+    });
+
+    return Buffer.from(response.data, 'binary');
   }
 }
