@@ -1,11 +1,39 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { grupoDto } from './dto';
-import { tipoGrupo, tipoUsuario } from '@prisma/client';
+import { tipoGrupo, tipoTarea, tipoUsuario } from '@prisma/client';
 
 @Injectable()
 export class GruposService {
   constructor(private prisma: PrismaService) {}
+
+  async OverviewClase(user: any, id: number) {
+    const clase = await this.prisma.grupos.findUnique({
+      include: {
+        tareas: true,
+        alumnos: true,
+      },
+      where: {
+        id: id,
+      },
+    });
+
+    if (user.id === clase.idProfesor) {
+      clase.tareas = clase.tareas.filter(
+        (tarea) => tarea.estado !== tipoTarea.eliminado,
+      );
+      return clase;
+    }
+    const alumno = clase.alumnos.find((x) => x.id === user.id);
+    if (!!alumno) {
+      delete clase.alumnos;
+      clase.tareas = clase.tareas.filter(
+        (tarea) => tarea.estado === tipoTarea.visible,
+      );
+      return clase;
+    }
+    throw new ForbiddenException('No eres parte de esta clase');
+  }
 
   async EncontrarClases(user: any) {
     const alumno = await this.prisma.usuarios.findFirst({

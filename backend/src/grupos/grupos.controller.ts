@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   Req,
@@ -17,6 +18,10 @@ import { grupoDto, grupoIdDto } from './dto';
 @Controller('grupos')
 export class GruposController {
   constructor(private gruposService: GruposService) {}
+  @Get(':id')
+  Overview(@Req() req: Request, @Param('id') id: number) {
+    return this.gruposService.OverviewClase(req.user, id);
+  }
   @Get('clases')
   EncontrarClases(@Req() req: Request) {
     return this.gruposService.EncontrarClases(req.user);

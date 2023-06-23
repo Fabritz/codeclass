@@ -1,16 +1,25 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-export enum tiposDeUsuario {
-  alumno = 'alumno',
-  profesor = 'profesor',
-}
+import { tipoTarea } from '@prisma/client';
+import {
+  IsDate,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 
-export class AuthDto {
-  @IsEmail()
-  @IsNotEmpty()
-  email: string;
+export class TareaDto {
+  id: number;
   @IsString()
   @IsNotEmpty()
-  password: string;
-  @IsEnum(tiposDeUsuario)
-  tipo: tiposDeUsuario;
+  titulo: string;
+  @IsString()
+  descripcion?: string;
+  @IsNumber()
+  @IsNotEmpty()
+  idClase: number;
+  @IsDate()
+  @IsNotEmpty()
+  fechaDeEntrega: Date;
+  @IsEnum(tipoTarea)
+  estado: tipoTarea;
 }
