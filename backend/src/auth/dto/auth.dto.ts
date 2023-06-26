@@ -1,4 +1,10 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 export enum tiposDeUsuario {
   alumno = 'alumno',
   profesor = 'profesor',
@@ -11,6 +17,7 @@ export class AuthDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+  @IsOptional()
   @IsEnum(tiposDeUsuario)
   tipo: tiposDeUsuario;
 }
